@@ -20,6 +20,8 @@ describe('QuickNode SDK', () => {
             '0x2106C00Ac7dA0A3430aE667879139E832307AeAa',
         ]);
 
+        console.log(res)
+
         expect(res).not.to.be.empty;
     });
 
