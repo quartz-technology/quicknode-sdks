@@ -1,5 +1,6 @@
 query CollectionDetails($address: String!) {
     contract(address: $address) {
+        __typename
         ... on ERC721Contract {
             address
             isVerified
