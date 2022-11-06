@@ -1,7 +1,0 @@
-query ExampleQuery($address: String!) {
-  contract(address: $address) {
-    __typename
-    address
-    isVerified
-  }
-}

@@ -193,7 +193,13 @@ impl QuickNodeSDK {
         }
     }
 
-    pub async fn get_contract_event_logs(self, address: &str, filter: Option<contract_events::LogsFilterInputType>, first: Option<i64>, after: Option<String>) -> Result<contract_events::ResponseData, Report<QuickNodeError>> {
+    pub async fn get_contract_event_logs(
+        self,
+        address: &str,
+        filter: Option<contract_events::LogsFilterInputType>,
+        first: Option<i64>,
+        after: Option<String>
+    ) -> Result<contract_events::ResponseData, Report<QuickNodeError>> {
         let vars = contract_events::Variables {
             address: address.to_string(),
             filter,
