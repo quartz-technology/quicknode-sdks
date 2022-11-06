@@ -27,6 +27,14 @@ impl Error for QuickNodeError {}
 )]
 pub struct CollectionDetails;
 
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.gql",
+    query_path = "src/queries/GetContractAddressNFTs.gql",
+    response_derives = "Debug"
+)]
+pub struct ContractNFTs;
+
 pub struct QuickNodeSDK {
     base_url: String,
     icy_api_key: String,
@@ -82,6 +90,47 @@ impl QuickNodeSDK {
             None => Err(Report::new(QuickNodeError::Request)),
         }
     }
+
+    pub async fn get_contract_address_nfts(
+        self,
+        address: &str,
+        first: Option<i64>,
+        after: Option<String>,
+    ) -> Result<contract_nf_ts::ResponseData, Report<QuickNodeError>> {
+        let vars = contract_nf_ts::Variables {
+            address: address.to_string(),
+            first,
+            after,
+        };
+
+        let request_body = ContractNFTs::build_query(vars);
+
+        let res = self
+            .client
+            .post(self.base_url)
+            .json(&request_body)
+            .send()
+            .await
+            .into_report()
+            .attach_printable("failed to perform POST".to_string())
+            .change_context(QuickNodeError::Request)?;
+
+        let response_body: Response<contract_nf_ts::ResponseData> = res
+            .json()
+            .await
+            .into_report()
+            .attach_printable("failed to deserialize response".to_string())
+            .change_context(QuickNodeError::Deserialization)?;
+
+        if let Some(errors) = response_body.errors {
+            return Err(Report::new(QuickNodeError::GraphQL(errors)));
+        }
+
+        match response_body.data {
+            Some(data) => Ok(data),
+            None => Err(Report::new(QuickNodeError::Request)),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -97,6 +146,23 @@ mod tests {
 
         match res {
             Ok(collection_details) => println!("{:?}", collection_details),
+            Err(err) => println!("{:?}", err),
+        }
+    }
+
+    #[tokio::test]
+    async fn it_gets_contract_address_nfts() {
+        let sdk = QuickNodeSDK::new("");
+        let res = sdk
+            .get_contract_address_nfts(
+                "0x2106C00Ac7dA0A3430aE667879139E832307AeAa",
+                Option::None,
+                Option::None,
+            )
+            .await;
+
+        match res {
+            Ok(nfts) => println!("{:?}", nfts),
             Err(err) => println!("{:?}", err),
         }
     }
