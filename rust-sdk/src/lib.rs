@@ -1,5 +1,4 @@
-use graphql_client::{reqwest::post_graphql, GraphQLQuery, Response};
-use std::error::Error;
+use graphql_client::{GraphQLQuery, Response, Error};
 use reqwest;
 
 #[derive(GraphQLQuery)]
@@ -10,7 +9,7 @@ use reqwest;
 )]
 pub struct ExampleQuery;
 
-pub async fn send_request() -> Result<(), Box<dyn Error>> {
+pub async fn send_request() -> Result<Option<example_query::ResponseData>, Box<dyn Error>> {
     let client = reqwest::Client::new();
     let vars = example_query::Variables {
         address: String::from("0x60E4d786628Fea6478F785A6d7e704777c86a7c6"),
@@ -23,10 +22,16 @@ pub async fn send_request() -> Result<(), Box<dyn Error>> {
         .send()
         .await?;
     let response_body: Response<example_query::ResponseData> = res.json().await?;
-    println!("{:#?}", response_body);
-    
+    println!("{:#?}", response_body.errors);
 
-    Ok(())
+    match response_body.errors {
+        Some(err) => Err(Box::new(err)),
+        None => Ok(response_body.data)
+    }
+}
+
+pub async fn get_collection_details(collection_address: &str) -> () {
+    
 }
 
 #[cfg(test)]
