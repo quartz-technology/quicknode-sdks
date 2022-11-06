@@ -34,5 +34,5 @@ jobs:
         
     - name: Run tests
       run: |
-        cd tests
+        cd python-sdk/tests/
         pytest
