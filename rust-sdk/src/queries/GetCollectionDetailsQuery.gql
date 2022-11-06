@@ -1,0 +1,26 @@
+query CollectionDetails($address: String!) {
+    contract(address: $address) {
+        __typename
+        ... on ERC721Contract {
+            address
+            isVerified
+            tokenStandard
+            attributes {
+                name
+                rarity
+                value
+                valueCount
+            }
+            circulatingSupply
+            name
+            stats {
+                average
+                ceiling
+                floor
+                totalSales
+                volume
+            }
+            symbol
+        }
+    }
+}

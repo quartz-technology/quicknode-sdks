@@ -1,0 +1,40 @@
+query NFTsWalletAndContract(
+    $filter: TokensFilterInputType
+    $address: String
+    $first: Int
+    $after: String
+) {
+    wallet(address: $address) {
+        __typename
+        ensName
+        address
+        tokens(filter: $filter, first: $first, after: $after) {
+            __typename
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+            edges {
+                __typename
+                node {
+                    __typename
+                    tokenId
+                    images {
+                        url
+                    }
+                    ... on ERC721Token {
+                        contract {
+                            __typename
+                            address
+                            ... on ERC721Contract {
+                                __typename
+                                symbol
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

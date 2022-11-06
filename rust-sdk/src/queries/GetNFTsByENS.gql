@@ -1,0 +1,36 @@
+query WalletNFTsByENS($ensName: String, $first: Int, $after: String) {
+    wallet(ensName: $ensName) {
+        __typename
+        ensName
+        address
+        tokens(first: $first, after: $after) {
+            __typename
+            pageInfo {
+                __typename
+                hasNextPage
+                endCursor
+            }
+            edges {
+                __typename
+                node {
+                    __typename
+                    tokenId
+                    images {
+                        url
+                    }
+                    ... on ERC721Token {
+                        contract {
+                            __typename
+                            address
+                            ... on ERC721Contract {
+                                __typename
+                                symbol
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

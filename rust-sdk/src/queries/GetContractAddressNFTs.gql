@@ -1,0 +1,35 @@
+query ContractNFTs($address: String!, $first: Int, $after: String) {
+    contract(address: $address) {
+        __typename
+        address
+        isVerified
+        tokenStandard
+        tokens(first: $first, after: $after) {
+            pageInfo {
+                hasNextPage
+                endCursor
+            }
+            edges {
+                node {
+                    tokenId
+                    images {
+                        url
+                    }
+                    __typename
+                    ... on ERC721Token {
+                        contract {
+                            __typename
+                            address # Included key field for caching
+                        }
+                    }
+                }
+            }
+        }
+        __typename
+        ... on ERC721Contract {
+            circulatingSupply
+            name
+            symbol
+        }
+    }
+}
