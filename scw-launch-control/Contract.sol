@@ -17,7 +17,7 @@ contract VolumeLaunchControl {
     event RequestMade(uint256 requestId, string zone, string server_name, string volume_type, uint256 volume_size);
     event ResponseReceived(uint256 requestId, string volume_id, string volume_name, string volume_state);
 
-    address constant startpointAddress = 0x0000000000000000000000000000000000000000;
+    address constant startpointAddress = 0x9BEa2A4C2d84334287D60D6c36Ab45CB453821eB;
     address constant whitelistedCallbackAddress = 0xC0FFEE4a3A2D488B138d090b8112875B90b5e6D9;
 
     // Midpoint ID
