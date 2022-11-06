@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="74edd5e0-8b34-4809-9a7b-bc904bb7a588" name="Changes" comment="feat: add go SDK&#10;&#10;Implement a Go SDK for QuickNode.&#10;This SDK is based on the official Typescript SDK.&#10;It includes tests and additional&#10;explanation on the README.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/auth.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/endpoint.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/options.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/queries.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/quickstart.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getCollectionDetails.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getCollectionDetails_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getContractEventLogs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getContractEventLogs_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTDetails.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTDetails_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTEventLogs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByContractAddress.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByContractAddress_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletAddress.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletAddress_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletAndContracts.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletAndContracts_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletENS.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNFTsByWalletENS_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/nft/getNftEventLogs_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/log.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/pagination.go" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///opt/homebrew/Cellar/go/1.19.1/libexec" />
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Vasek - Tom C &lt;tom@quartz.technology&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence">
+    <option name="context" value="kind-kind" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2H8iLPzScol0SfXL19f1Djis4iR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "TF_FMT": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/tomchauveau/Documents/Quartz/quicknode-sdks/go/queries/nft",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/queries/nft" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/queries/nft" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestCollectionDetails in github.com/quartz-technology/qn-sdk/queries/nft">
+    <configuration name="TestCollectionDetails in github.com/quartz-technology/qn-sdk/queries/nft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/queries/nft" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/quartz-technology/qn-sdk/queries/nft" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestCollectionDetails\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetNFTsByWalletAddress in github.com/quartz-technology/qn-sdk/queries/nft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/queries/nft" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/quartz-technology/qn-sdk/queries/nft" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetNFTsByWalletAddress\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetNFTsByWalletAndContracts in github.com/quartz-technology/qn-sdk/queries/nft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/queries/nft" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/quartz-technology/qn-sdk/queries/nft" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetNFTsByWalletAndContracts\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestGetNFTsByWalletENS in github.com/quartz-technology/qn-sdk/queries/nft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/queries/nft" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/quartz-technology/qn-sdk/queries/nft" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestGetNFTsByWalletENS\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go test github.com/quartz-technology/qn-sdk/queries/nft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/queries/nft" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/quartz-technology/qn-sdk/queries/nft" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestCollectionDetails in github.com/quartz-technology/qn-sdk/queries/nft" />
+        <item itemvalue="Go Test.TestGetNFTsByWalletAddress in github.com/quartz-technology/qn-sdk/queries/nft" />
+        <item itemvalue="Go Test.go test github.com/quartz-technology/qn-sdk/queries/nft" />
+        <item itemvalue="Go Test.TestGetNFTsByWalletAndContracts in github.com/quartz-technology/qn-sdk/queries/nft" />
+        <item itemvalue="Go Test.TestGetNFTsByWalletENS in github.com/quartz-technology/qn-sdk/queries/nft" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add go SDK&#10;&#10;Implement a Go SDK for QuickNode.&#10;This SDK is based on the official Typescript SDK.&#10;It includes tests and additional&#10;explanation on the README." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add go SDK&#10;&#10;Implement a Go SDK for QuickNode.&#10;This SDK is based on the official Typescript SDK.&#10;It includes tests and additional&#10;explanation on the README." />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
