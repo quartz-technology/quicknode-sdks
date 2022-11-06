@@ -1,0 +1,1077 @@
+schema {
+  query: RootQuery
+  mutation: Mutations
+}
+
+# A transaction
+type Transaction {
+  blockNumber: Int!
+
+  # The number of confirmations for this transaction
+  confirmations: Int!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+  fromAddress: String!
+
+  # The amount of gas supplied for this transaction to happen
+  gasLimit: Int!
+
+  # Cost in Gwei per unit of gas for this transaction.
+  gasPrice: Float
+
+  # The amount of gas used by this transaction
+  gasUsed: Int!
+
+  # Max gas fee in Gwei
+  maxGasFee: Float
+
+  # Max gas priority fee in Gwei
+  maxGasPriorityFee: Float
+  hash: String!
+  toAddress: String
+
+  # Transaction fee in ETH
+  transactionFeeInEth: Float!
+  transactionIndex: String!
+
+  # The transaction type
+  type: Int
+
+  # The value being transacted in ETH
+  valueInEth: Float!
+
+  # The from Wallet related to this transaction
+  from: Wallet
+
+  # The log history for this token
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # The to Wallet related to this transaction
+  to: Wallet
+}
+
+# Date custom scalar type
+scalar Date
+
+# A connection to a list of items.
+type LogConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [LogEdge]
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# An edge in a connection.
+type LogEdge {
+  # The item at the end of the edge
+  node: Log
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Filter input for logs
+input LogsFilterInputType {
+  # Filter logs by their block number
+  blockNumber: IntegerInput
+
+  # Filter logs by contract address
+  contractAddress: StringInput
+
+  # Filter logs by their estimated confirmation date
+  estimatedConfirmedAt: DateInputType
+
+  # Filter logs by the "from" wallet
+  fromAddress: StringInput
+
+  # Filter logs by marketplace
+  marketplace: OrderMarketplaceInput
+
+  # Filter logs by the "to" wallet
+  toAddress: StringInput
+
+  # Filter logs by their type
+  type: LogTypeInput
+
+  # Filter logs by their type
+  typeIn: [LogType!]
+}
+
+input IntegerInput {
+  eq: Int
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+}
+
+input StringInput {
+  eq: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input DateInputType {
+  eq: Date
+  lt: Date
+  lte: Date
+  gt: Date
+  gte: Date
+}
+
+# Filter by marketplace
+input OrderMarketplaceInput {
+  eq: LogOrderMarketplace
+  in: [LogOrderMarketplace!]
+  notIn: [LogOrderMarketplace!]
+}
+
+enum LogOrderMarketplace {
+  CRYPTOPUNKS
+  GEM
+  GENIE
+  LOOKSRARE
+  NIFTYGATEWAY
+  OPENSEA
+  X2Y2
+  ZEROX
+}
+
+# Filter by type
+input LogTypeInput {
+  eq: LogType
+  in: [LogType!]
+  notIn: [LogType!]
+}
+
+enum LogType {
+  MINT
+  ORDER
+  TRANSFER
+}
+
+# A token attribute
+type TokenAttribute {
+  # Attribute name
+  name: String!
+
+  # Attribute value
+  value: String!
+}
+
+# A wallet
+type Wallet {
+  address: String!
+  ensName: String
+
+  # The held collections for a wallet
+  heldCollections(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # The field you want to order by. Default is DATE_ACQUIRED.
+    orderBy: HeldCollectionsOrderByEnum
+
+    # The direction you want to order results: ASC/DESC
+    orderDirection: OrderDirectionEnum
+
+    # Filters for held collections
+    filter: HeldCollectionsFilterInputType
+  ): ERC721ContractConnection
+
+  # The log history for this wallet
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # A token owned by this wallet, if it exists
+  token(
+    # The address of the contract that the token is under
+    contractAddress: String!
+
+    # The id of the token
+    tokenId: String!
+  ): Token
+
+  # A list of tokens owned by this wallet
+  tokens(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for tokens
+    filter: TokensFilterInputType
+
+    # The field you want to order by. Default is DATE_ACQUIRED.
+    orderBy: HeldTokensOrderByEnum
+
+    # The direction you want to order results: ASC/DESC
+    orderDirection: OrderDirectionEnum
+  ): TokenConnection
+
+  # The transaction history for this wallet
+  transactions(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for transactions
+    filter: TransactionsFilterInputType
+  ): TransactionConnection
+}
+
+# A connection to a list of items.
+type ERC721ContractConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ERC721ContractEdge]
+}
+
+# An edge in a connection.
+type ERC721ContractEdge {
+  # The item at the end of the edge
+  node: ERC721Contract
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+enum HeldCollectionsOrderByEnum {
+  # The name of the collection
+  NAME
+
+  # The timestamp of when the wallet acquired a token in this collection.
+  DATE_ACQUIRED
+}
+
+enum OrderDirectionEnum {
+  # Sort ascending (A-Z)
+  ASC
+
+  # Sort descending (Z-A)
+  DESC
+}
+
+# Held collections filter
+input HeldCollectionsFilterInputType {
+  contractAddressIn: [String!]
+}
+
+# A connection to a list of items.
+type TokenConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [TokenEdge]
+}
+
+# An edge in a connection.
+type TokenEdge {
+  # The item at the end of the edge
+  node: Token
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Tokens filter
+input TokensFilterInputType {
+  contractAddressIn: [String!]
+  name: SearchStringInput
+}
+
+input SearchStringInput {
+  eq: String
+  ieq: String
+  startswith: String
+  endswith: String
+  contains: String
+  istartswith: String
+  iendswith: String
+  icontains: String
+}
+
+enum HeldTokensOrderByEnum {
+  # The name of the token
+  NAME
+
+  # The timestamp of when the wallet acquired this token.
+  DATE_ACQUIRED
+}
+
+# A connection to a list of items.
+type TransactionConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [TransactionEdge]
+}
+
+# An edge in a connection.
+type TransactionEdge {
+  # The item at the end of the edge
+  node: Transaction
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Filter input for transactions
+input TransactionsFilterInputType {
+  # Filter transactions by their block number
+  blockNumber: IntegerInput
+
+  # Filter transactions by their estimated confirmation date
+  estimatedConfirmedAt: DateInputType
+
+  # Filter transactions by the "from" wallet
+  fromAddress: StringInput
+
+  # Filter transactions by the "to" wallet
+  toAddress: StringInput
+}
+
+# An ERC-721 contract
+type ERC721Contract implements Contract {
+  address: String!
+  isVerified: Boolean!
+  tokenStandard: TokenStandard
+
+  # Statistics related to a token's traits/attributes.
+  attributes: [ContractAttribute]!
+
+  # The log history for this contract
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # A token under this contract
+  token(
+    # The id of the token
+    tokenId: String!
+  ): Token
+  tokens(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+  ): TokenConnection
+  circulatingSupply: Int
+
+  # The name of the contract
+  name: String
+  stats(
+    # The date range from which to pull stats from. Defaults to last 24 hours. Not allowed when querying under trendingCollections.
+    timeRange: DateInputType
+  ): ContractStats
+
+  # The symbol of the contract
+  symbol: String
+
+  # See OpenSea's docs for Collection.banner_image_url. This field is marked unsafe due to the fact OpenSea metadata can change at anytime and we may not have recent changes to this data.
+  unsafeOpenseaBannerImageUrl: String
+
+  # See OpenSea's docs for Collection.description. This field is marked unsafe due to the fact OpenSea metadata can change at anytime and we may not have recent changes to this data.
+  unsafeOpenseaDescription: String
+
+  # See OpenSea's docs for Collection.image_url. This field is marked unsafe due to the fact OpenSea metadata can change at anytime and we may not have recent changes to this data.
+  unsafeOpenseaImageUrl: String
+
+  # See OpenSea's docs for Collection.slug. This field is marked unsafe due to the fact OpenSea metadata can change at anytime and we may not have recent changes to this data.
+  unsafeOpenseaSlug: String
+
+  # See OpenSea's docs for Collection.external_url. This field is marked unsafe due to the fact OpenSea metadata can change at anytime and we may not have recent changes to this data.
+  unsafeOpenseaExternalUrl: String
+}
+
+enum TokenStandard {
+  ERC721
+  ERC1155
+}
+
+# A contract's stats for a given timeframe
+type ContractStats {
+  # Average price
+  average: Float
+
+  # Ceiling price
+  ceiling: Float
+
+  # Floor price
+  floor: Float
+
+  # Total number of sales
+  totalSales: Int
+
+  # Total volume
+  volume: Float
+}
+
+# A base contract
+type BaseContract implements Contract {
+  address: String!
+  isVerified: Boolean!
+  tokenStandard: TokenStandard
+
+  # Statistics related to a token's traits/attributes.
+  attributes: [ContractAttribute]!
+
+  # The log history for this contract
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # A token under this contract
+  token(
+    # The id of the token
+    tokenId: String!
+  ): Token
+  tokens(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+  ): TokenConnection
+}
+
+# A contract
+interface Contract {
+  address: String!
+  isVerified: Boolean!
+  tokenStandard: TokenStandard
+
+  # Statistics related to a token's traits/attributes.
+  attributes: [ContractAttribute]!
+
+  # The log history for this contract
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # A token under this contract
+  token(
+    # The id of the token
+    tokenId: String!
+  ): Token
+  tokens(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+  ): TokenConnection
+}
+
+# A contract's attribute count
+type ContractAttribute {
+  # The trait key.
+  name: String!
+
+  # The `100 * value_count / total_tokens for the contract.
+  rarity: Float
+
+  # The value of the trait.
+  value: String
+
+  # The total count for this name: value pair in the contract.
+  value_count: Int! @deprecated(reason: "Moved to \"valueCount\".")
+
+  # The total count for this name: value pair in the contract.
+  valueCount: Int!
+}
+
+# A base log
+type BaseLog implements Log {
+  # The block number for this log
+  blockNumber: Int!
+
+  # The contract address for this log
+  contractAddress: String!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+
+  # The from address for this log
+  fromAddress: String!
+
+  # This log index -- logs are unique by the transaction_hash + log_index
+  logIndex: Int!
+
+  # The to address for this log
+  toAddress: String!
+
+  # The transaction hash for this log
+  transactionHash: String!
+
+  # The address of the wallet that created this transaction
+  transactionCreator: String
+
+  # The type of log this is: Order, Mint, Transfer, etc.
+  type: LogType!
+
+  # The Contract related to this log
+  contract: Contract!
+
+  # The from Wallet related to this log
+  from: Wallet
+
+  # The to Wallet related to this log
+  to: Wallet
+
+  # The Token related to this log
+  token: Token
+
+  # The Transaction related to this log
+  transaction: Transaction
+}
+
+# A log
+interface Log {
+  # The block number for this log
+  blockNumber: Int!
+
+  # The contract address for this log
+  contractAddress: String!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+
+  # The from address for this log
+  fromAddress: String!
+
+  # This log index -- logs are unique by the transaction_hash + log_index
+  logIndex: Int!
+
+  # The to address for this log
+  toAddress: String!
+
+  # The transaction hash for this log
+  transactionHash: String!
+
+  # The address of the wallet that created this transaction
+  transactionCreator: String
+
+  # The type of log this is: Order, Mint, Transfer, etc.
+  type: LogType!
+
+  # The Contract related to this log
+  contract: Contract!
+
+  # The from Wallet related to this log
+  from: Wallet
+
+  # The to Wallet related to this log
+  to: Wallet
+
+  # The Token related to this log
+  token: Token
+
+  # The Transaction related to this log
+  transaction: Transaction
+}
+
+# A Mint log
+type MintLog implements Log {
+  # The block number for this log
+  blockNumber: Int!
+
+  # The contract address for this log
+  contractAddress: String!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+
+  # The from address for this log
+  fromAddress: String!
+
+  # This log index -- logs are unique by the transaction_hash + log_index
+  logIndex: Int!
+
+  # The to address for this log
+  toAddress: String!
+
+  # The transaction hash for this log
+  transactionHash: String!
+
+  # The address of the wallet that created this transaction
+  transactionCreator: String
+
+  # The type of log this is: Order, Mint, Transfer, etc.
+  type: LogType!
+
+  # The Contract related to this log
+  contract: Contract!
+
+  # The from Wallet related to this log
+  from: Wallet
+
+  # The to Wallet related to this log
+  to: Wallet
+
+  # The Token related to this log
+  token: Token
+
+  # The Transaction related to this log
+  transaction: Transaction
+}
+
+# A Order log
+type OrderLog implements Log {
+  # The block number for this log
+  blockNumber: Int!
+
+  # The contract address for this log
+  contractAddress: String!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+
+  # The from address for this log
+  fromAddress: String!
+
+  # This log index -- logs are unique by the transaction_hash + log_index
+  logIndex: Int!
+
+  # The to address for this log
+  toAddress: String!
+
+  # The transaction hash for this log
+  transactionHash: String!
+
+  # The address of the wallet that created this transaction
+  transactionCreator: String
+
+  # The type of log this is: Order, Mint, Transfer, etc.
+  type: LogType!
+
+  # The Contract related to this log
+  contract: Contract!
+
+  # The from Wallet related to this log
+  from: Wallet
+
+  # The to Wallet related to this log
+  to: Wallet
+
+  # The Token related to this log
+  token: Token
+
+  # The Transaction related to this log
+  transaction: Transaction
+
+  # The marketplace this Order was placed on: OpenSea, Genie, etc.
+  marketplace: LogOrderMarketplace
+
+  # The price paid in Ethereum
+  priceInEth: Float!
+}
+
+# A Transfer log
+type TransferLog implements Log {
+  # The block number for this log
+  blockNumber: Int!
+
+  # The contract address for this log
+  contractAddress: String!
+
+  # The estimated time the transaction was confirmed at
+  estimatedConfirmedAt: Date!
+
+  # The from address for this log
+  fromAddress: String!
+
+  # This log index -- logs are unique by the transaction_hash + log_index
+  logIndex: Int!
+
+  # The to address for this log
+  toAddress: String!
+
+  # The transaction hash for this log
+  transactionHash: String!
+
+  # The address of the wallet that created this transaction
+  transactionCreator: String
+
+  # The type of log this is: Order, Mint, Transfer, etc.
+  type: LogType!
+
+  # The Contract related to this log
+  contract: Contract!
+
+  # The from Wallet related to this log
+  from: Wallet
+
+  # The to Wallet related to this log
+  to: Wallet
+
+  # The Token related to this log
+  token: Token
+
+  # The Transaction related to this log
+  transaction: Transaction
+}
+
+# An ERC721 token
+type ERC721Token implements Token {
+  tokenId: String!
+
+  # The attributes of the token.
+  attributes: [TokenAttribute]!
+
+  # The contract standard for the token.
+  contract: Contract!
+
+  # An array of image locations and sizes for the token.
+  images: [TokenImage]!
+
+  # The log history for this token
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+  name: String
+  ownerAddress: String
+  symbol: String
+  metadata: ERC721Metadata
+  owner: Wallet
+}
+
+# An uploaded token image
+type TokenImage {
+  # Height in pixels of token image
+  height: Int
+
+  # The mime type of the image
+  mimeType: String
+
+  # CDN served image URLs in various sizes or as SVG
+  url: String!
+
+  # Width in pixels of token image
+  width: Int
+}
+
+# An ERC721 standard metadata. Return any keys matching the ERC721 standard and ignore non-conforming keys.
+type ERC721Metadata {
+  animation_url: String
+  attributes: [ERC721MetadataAttribute]
+  background_color: String
+  description: String
+  external_url: String
+  image: String
+  image_data: String
+  name: String
+  youtube_url: String
+}
+
+# A Metadata Attribute. Return the attribute keys for the ERC721 standard.
+type ERC721MetadataAttribute {
+  display_type: String
+  trait_type: String
+  value: String
+}
+
+# A base token
+type BaseToken implements Token {
+  tokenId: String!
+
+  # The attributes of the token.
+  attributes: [TokenAttribute]!
+
+  # The contract standard for the token.
+  contract: Contract!
+
+  # An array of image locations and sizes for the token.
+  images: [TokenImage]!
+
+  # The log history for this token
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+}
+
+# A token
+interface Token {
+  tokenId: String!
+
+  # The attributes of the token.
+  attributes: [TokenAttribute]!
+
+  # The contract standard for the token.
+  contract: Contract!
+
+  # An array of image locations and sizes for the token.
+  images: [TokenImage]!
+
+  # The log history for this token
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+}
+
+# The root of all... queries
+type RootQuery {
+  # Fetches a contract
+  contract(
+    # The address of the contract
+    address: String!
+  ): Contract
+
+  # Fetches all contracts with default sorting alphabetically by name
+  contracts(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+    filter: ContractsFilterInput
+    orderBy: ContractsOrderByEnum
+
+    # The direction you want to order results: ASC/DESC
+    orderDirection: OrderDirectionEnum
+  ): ContractConnection
+
+  # Fetches all logs sorted by descending estimatedConfirmedAt
+  logs(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+
+    # Filters for logs
+    filter: LogsFilterInputType
+  ): LogConnection
+
+  # Fetches a list of trending collections with default sorting by descending sales.
+  trendingCollections(
+    # Returns the items in the list that come after the specified cursor.
+    after: String
+
+    # Returns the first n items from the list.
+    first: Int
+    orderBy: TrendingCollectionsOrderByEnum
+
+    # The direction you want to order results: ASC/DESC. Defaults to DESC.
+    orderDirection: OrderDirectionEnum
+
+    # A time period relative to the current time in which to filter trending collections by.
+    timePeriod: TrendingCollectionsTimePeriodEnum
+
+    # Custom time range in which to filter trending collections by. Available only to paid customers.
+    timeRange: DateInputType
+
+    # Filters the trending collections to orders only found on particular marketplaces.
+    marketplace: OrderMarketplaceInput
+  ): ContractConnection
+
+  # Fetches a token
+  token(
+    # The address of the contract that the token is under
+    contractAddress: String!
+
+    # The id of the token
+    tokenId: String!
+  ): Token
+
+  # Fetches a wallet. Provide either a wallet address or ensName. The query will use address if both are provided.
+  wallet(
+    # The address of the wallet
+    address: String
+
+    # A wallet's ENS name
+    ensName: String
+  ): Wallet
+}
+
+# A connection to a list of items.
+type ContractConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ContractEdge]
+}
+
+# An edge in a connection.
+type ContractEdge {
+  # The item at the end of the edge
+  node: Contract
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# Filters available to the "contracts" query
+input ContractsFilterInput {
+  # The address of the contract
+  address: StringInput
+
+  # The name of the contract
+  name: SearchStringInput
+
+  # The symbol of the contract
+  symbol: SearchStringInput
+}
+
+enum ContractsOrderByEnum {
+  # Sort contracts by average sale price within a given time range. Defaults to within last hour, use timeframe on "stats" to further filter.
+  AVERAGE @deprecated(reason: "Use the trendingCollections query instead.")
+
+  # Sort contracts by max sale price within a given time range. Defaults to within last hour, use timeframe on "stats" to further filter.
+  CEILING @deprecated(reason: "Use the trendingCollections query instead.")
+
+  # Sort contracts by min sale price within a given time range. Defaults to within last hour, use timeframe on "stats" to further filter.
+  FLOOR @deprecated(reason: "Use the trendingCollections query instead.")
+
+  # Sort contracts alphabetically by name
+  NAME
+
+  # Sort contracts by number of sales. Defaults to within last hour, use timeframe on "stats" to further filter.
+  SALES @deprecated(reason: "Use the trendingCollections query instead.")
+
+  # Sort contracts alphabetically by symbol
+  SYMBOL
+
+  # Sort contracts by volume. Defaults to within last hour, use timeframe on "stats" to further filter.
+  VOLUME @deprecated(reason: "Use the trendingCollections query instead.")
+}
+
+enum TrendingCollectionsOrderByEnum {
+  # Sort contracts by average sale price within a given time range. Defaults to within last hour.
+  AVERAGE
+
+  # Sort contracts by number of sales. Defaults to within last hour.
+  SALES
+
+  # Sort contracts by volume. Defaults to within last hour.
+  VOLUME
+}
+
+enum TrendingCollectionsTimePeriodEnum {
+  # Last hour
+  ONE_HOUR
+
+  # Last 12 hours
+  TWELVE_HOURS
+
+  # Last 24 hours
+  ONE_DAY
+
+  # Last 7 days
+  SEVEN_DAYS
+}
+
+# The root of all... mutations
+type Mutations {
+  # Queues a job to refresh of the metadata of a specific token or every token in a collection.
+  #     If tokenId is omitted, it will queue a refresh for every token in the collection.
+  #      Only trigger a refresh of the entire collection if absolutely necessary.
+  refreshTokenMetadata(
+    input: RefreshTokenMetadataInput!
+  ): RefreshMetadataStatusMessage!
+}
+
+enum RefreshMetadataStatusMessage {
+  COMPLETED
+  COMPLETED_TOKEN
+  QUEUED
+  QUEUED_TOKEN
+  ERROR
+  ERROR_TOKEN
+}
+
+input RefreshTokenMetadataInput {
+  contractAddress: String!
+
+  # Include to refresh a specific token's metadata
+  tokenId: String
+}
