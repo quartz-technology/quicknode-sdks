@@ -1,6 +1,6 @@
 import pytest
 
-
+"""
 @pytest.mark.asyncio
 async def test_all_types(client):
     await client.connect()
@@ -58,7 +58,7 @@ async def test_all_types(client):
     }
 
     await client.close()
-
+"""
 
 @pytest.mark.asyncio
 async def test_one_type(client):
