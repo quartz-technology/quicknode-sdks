@@ -5,14 +5,19 @@ query ContractEvents(
     $after: String
 ) {
     contract(address: $address) {
+        __typename
         address
         logs(filter: $filter, first: $first, after: $after) {
+            __typename
             pageInfo {
+                __typename
                 hasNextPage
                 endCursor
             }
             edges {
+                __typename
                 node {
+                    __typename
                     blockNumber
                     type
                     fromAddress
@@ -20,14 +25,18 @@ query ContractEvents(
                     estimatedConfirmedAt
                     transactionHash
                     token {
+                        __typename
                         contract {
+                            __typename
                             address
                         }
                         ... on ERC721Token {
+                            __typename
                             tokenId
                         }
                     }
                     ... on OrderLog {
+                        __typename
                         marketplace
                         priceInEth
                     }

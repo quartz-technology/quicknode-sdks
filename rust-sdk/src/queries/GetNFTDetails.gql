@@ -1,5 +1,6 @@
 query NFTDetails($contractAddress: String!, $tokenId: String!) {
     token(contractAddress: $contractAddress, tokenId: $tokenId) {
+        __typename
         ... on ERC721Token {
             tokenId
             attributes {
@@ -7,6 +8,7 @@ query NFTDetails($contractAddress: String!, $tokenId: String!) {
                 value
             }
             contract {
+                __typename
                 address
                 isVerified
                 tokenStandard

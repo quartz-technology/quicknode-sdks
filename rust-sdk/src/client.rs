@@ -27,6 +27,53 @@ impl Error for QuickNodeError {}
 )]
 pub struct CollectionDetails;
 
+// #[derive(GraphQLQuery)]
+// #[graphql(
+//     schema_path = "src/schema.gql",
+//     query_path = "src/queries/GetContractEventLogs.gql",
+//     response_derives = "Debug"
+// )]
+// pub struct ContractEvents;
+
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.gql",
+    query_path = "src/queries/GetNFTDetails.gql",
+    response_derives = "Debug"
+)]
+pub struct NFTDetails;
+
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.gql",
+    query_path = "src/queries/GetNFTsByENS.gql",
+    response_derives = "Debug"
+)]
+pub struct WalletNFTsByENS;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.gql",
+    query_path = "src/queries/GetNFTsByWalletAddress.gql",
+    response_derives = "Debug"
+)]
+pub struct WalletNFTs;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.gql",
+    query_path = "src/queries/GetNFTsWalletAndContracts.gql",
+    response_derives = "Debug"
+)]
+pub struct NFTsWalletAndContract;
+
+struct TokensFilterInputType {
+    contractAddressIn: Vec<String>,
+    name: String,  
+}
+
 pub struct QuickNodeSDK {
     base_url: String,
     icy_api_key: String,
@@ -82,6 +129,19 @@ impl QuickNodeSDK {
             None => Err(Report::new(QuickNodeError::Request)),
         }
     }
+
+    // pub async fn get_contract_event_logs(self) {}
+
+    pub async fn get_nft_details(self, contract_address: &str, token_id: &str) {}
+
+    pub async fn get_nfts_by_ens(self, ens_name: &str, first: u32, after: &str) {}
+
+    pub async fn get_nfts_by_wallet_address(self, address: &str, first: u32, after: &str) {}
+
+    pub async fn get_nfts_wallet_and_contracts(self, filter: TokensFilterInputType, address: &str, after: &str) {
+
+    }
+
 }
 
 #[cfg(test)]
