@@ -126,6 +126,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -167,6 +168,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -204,6 +206,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -239,6 +242,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -280,6 +284,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -322,6 +327,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
@@ -365,6 +371,7 @@ impl QuickNodeSDK {
         let res = self
             .client
             .post(self.base_url)
+            .header("x-api-key", &self.icy_api_key)
             .json(&request_body)
             .send()
             .await
