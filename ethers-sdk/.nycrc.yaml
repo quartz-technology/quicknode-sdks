@@ -1,0 +1,6 @@
+extension:
+  - '.ts'
+reporter:
+  - text
+  - html
+report-dir: ./coverage

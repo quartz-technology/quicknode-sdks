@@ -90,7 +90,7 @@ mod tests {
 
     #[tokio::test]
     async fn it_works() {
-        let sdk = QuickNodeSDK::new(None);
+        let sdk = QuickNodeSDK::new("");
         let res = sdk
             .get_collection_details("0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D")
             .await;
