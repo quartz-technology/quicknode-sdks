@@ -5,11 +5,8 @@ use std::fmt;
 use std::fmt::{Debug, Display};
 
 /**
- * 
  *  Queries
- * 
  **/
-
 
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -37,7 +34,6 @@ pub struct ContractEvents;
 )]
 pub struct NFTDetails;
 
-
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/schema.gql",
@@ -45,7 +41,6 @@ pub struct NFTDetails;
     response_derives = "Debug"
 )]
 pub struct WalletNFTsByENS;
-
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/schema.gql",
@@ -70,13 +65,9 @@ pub struct NFTsWalletAndContract;
 )]
 pub struct ContractNFTs;
 
-
 /**
- * 
  *  Client configuration
- * 
  **/
-
 
 #[derive(Debug)]
 pub enum QuickNodeError {
@@ -92,7 +83,6 @@ impl Display for QuickNodeError {
 }
 
 impl Error for QuickNodeError {}
-
 
 pub struct QuickNodeSDK {
     base_url: String,
@@ -198,7 +188,7 @@ impl QuickNodeSDK {
         address: &str,
         filter: Option<contract_events::LogsFilterInputType>,
         first: Option<i64>,
-        after: Option<String>
+        after: Option<String>,
     ) -> Result<contract_events::ResponseData, Report<QuickNodeError>> {
         let vars = contract_events::Variables {
             address: address.to_string(),
@@ -237,7 +227,11 @@ impl QuickNodeSDK {
         }
     }
 
-    pub async fn get_nft_details(self, contract_address: &str, token_id: &str) -> Result<nft_details::ResponseData, Report<QuickNodeError>> {
+    pub async fn get_nft_details(
+        self,
+        contract_address: &str,
+        token_id: &str,
+    ) -> Result<nft_details::ResponseData, Report<QuickNodeError>> {
         let vars = nft_details::Variables {
             contract_address: contract_address.to_string(),
             token_id: token_id.to_string(),
@@ -313,7 +307,6 @@ impl QuickNodeSDK {
             Some(data) => Ok(data),
             None => Err(Report::new(QuickNodeError::Request)),
         }
-
     }
 
     pub async fn get_nfts_by_wallet_address(
@@ -363,7 +356,7 @@ impl QuickNodeSDK {
         filter: Option<nf_ts_wallet_and_contract::TokensFilterInputType>,
         address: Option<String>,
         first: Option<i64>,
-        after: Option<String>
+        after: Option<String>,
     ) -> Result<nf_ts_wallet_and_contract::ResponseData, Report<QuickNodeError>> {
         let vars = nf_ts_wallet_and_contract::Variables {
             filter,
@@ -401,7 +394,6 @@ impl QuickNodeSDK {
             None => Err(Report::new(QuickNodeError::Request)),
         }
     }
-    
 }
 
 #[cfg(test)]
@@ -441,10 +433,7 @@ mod tests {
     #[tokio::test]
     async fn it_get_nft_details() {
         let sdk = QuickNodeSDK::new("");
-        let res = sdk.get_nft_details(
-            "ADDR",
-            "TOKEN_ID",
-        ).await;
+        let res = sdk.get_nft_details("ADDR", "TOKEN_ID").await;
 
         match res {
             Ok(nft_details) => println!("{:?}", nft_details),
@@ -456,11 +445,7 @@ mod tests {
     async fn it_get_nfts_by_ens() {
         let sdk = QuickNodeSDK::new("");
         let res = sdk
-            .get_nfts_by_ens(
-                Some("FILL_WITH_ENS".to_string()),
-                None,
-                None,
-            )
+            .get_nfts_by_ens(Some("FILL_WITH_ENS".to_string()), None, None)
             .await;
 
         match res {
@@ -473,11 +458,7 @@ mod tests {
     async fn it_get_nfts_by_wallet_address() {
         let sdk = QuickNodeSDK::new("");
         let res = sdk
-            .get_nfts_by_wallet_address(
-                "FILL_WITH_ADDR",
-                None,
-                None,
-            )
+            .get_nfts_by_wallet_address("FILL_WITH_ADDR", None, None)
             .await;
 
         match res {
@@ -490,12 +471,7 @@ mod tests {
     async fn it_get_nfts_wallet_and_contract() {
         let sdk = QuickNodeSDK::new("");
         let res = sdk
-            .get_nfts_wallet_and_contract(
-                None,
-                Some("FILL_WITH_ADDR".to_string()),
-                None,
-                None,
-            )
+            .get_nfts_wallet_and_contract(None, Some("FILL_WITH_ADDR".to_string()), None, None)
             .await;
 
         match res {
@@ -521,5 +497,4 @@ mod tests {
             Err(err) => println!("{:?}", err),
         }
     }
-
 }
